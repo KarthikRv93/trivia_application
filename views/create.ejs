@@ -1,0 +1,133 @@
+<h2>Category</h2>
+<form action="/quiz/create" id="myform" method="POST"></form>
+    <select id="categoryType" for="categoryType">
+        <option value="existing"/>Existing Category</option>
+        <option value="new"/>New Category</option>
+    </select>
+    <select class="form-control" id="show-existing" class = "category">
+        <option value="politcs">Politics</option>
+        <option value="economy">Economy</option>
+    </select>
+
+    <input class="form-control category" id="show-new" for="Category" type = "text" style="display: none;"/>
+    <br>
+    <br>
+    <br>
+    <table id="myTable" class=" table order-list" style="border: 1px solid #ddd;">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>answer</td>
+                <td>correct</td>
+                <td>delete</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Question
+                </td>
+                <td class="col-sm-6">
+                    <input type="text" name="name" id="question" for="question" class="form-control" />
+                </td>
+                <td class="col-sm-2">
+                </td>
+                <td class="col-sm-2"><a class="deleteRow"></a>
+
+                </td>
+            </tr>
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" style="text-align: left;">
+                    <input type="button" class="btn btn-lg btn-block " id="addrow" value="Add Row" />
+                </td>
+            </tr>
+            <tr>
+            </tr>
+        </tfoot>
+    </table>
+    <button type="submit" id="add-question" class="btn btn-primary btn-block">
+        create question
+    </button>
+</form>
+<script>
+
+$(document).ready(function () {
+    var counter = 0;
+    $('#myselection').on('change', function(){
+        var demovalue = $(this).val(); 
+        $("div.myDiv").hide();
+        $("#show"+demovalue).show();
+    });
+    $("#addrow").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+        cols += '<td>option ' + counter + '</td>';
+        cols += '<td><input type="text" for="answer" class="form-control answer" name="name' + counter + '"/></td>';
+        cols += '<td><input type="checkbox" for="correct" class="form-control correct" name="mail' + counter + '"/></td>';
+        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+    });
+
+    $("#add-question").click(function(e)
+    { 
+        var answer = $('.answer');
+        var correct = $('.correct');
+        var i;
+        answerArray = []; 
+        for (i=0 ; i< answer.length; i++){
+            answerArray.push({answer_text : $(answer[i]).val(), isCorrect: $(correct[i]).prop("checked") == true});
+        }
+        
+        var myForm = {categoryType : $('#myselection').val(), Category:$('#show-existing').val(), question:$('#question').val(), answer: answerArray}
+        console.log(myForm);
+         $.ajax(
+        {
+            url : "/quiz/create",
+            type: "POST",
+            data : myForm,
+            success:function(response){
+                window.location.reload();
+            }
+        });
+        e.preventDefault(); //STOP default action
+
+    });
+
+    $('#categoryType').change(function() {
+        if($('#categoryType').val() == 'existing') {
+            $('#show-existing').show(); 
+            $('#show-new').hide();
+        } else {
+            $('#show-existing').show(); 
+            $('#show-new').hide(); 
+        }
+    });
+
+    $("table.order-list").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+
+
+});
+
+
+
+function calculateRow(row) {
+    var price = +row.find('input[name^="price"]').val();
+
+}
+
+function calculateGrandTotal() {
+    var grandTotal = 0;
+    $("table.order-list").find('input[name^="price"]').each(function () {
+        grandTotal += +$(this).val();
+    });
+    $("#grandtotal").text(grandTotal.toFixed(2));
+}
+</script>
