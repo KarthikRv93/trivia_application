@@ -84,7 +84,7 @@ $(document).ready(function () {
         var i;
         answerArray = []; 
         for (i=0 ; i< answer.length; i++){
-            answerArray.push({answer_text : $(answer[i]).val(), isCorrect: $(correct[i]).prop("checked") == true});
+            answerArray.push({answer_text : $(answer[i]).val(), isCorrect: $(correct[i]).prop("checked")});
         }
         
         if($('#categoryType').val() == 'existing') {
