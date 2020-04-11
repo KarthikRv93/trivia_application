@@ -1,16 +1,90 @@
-<h2>question</h2>
+<h2>Category</h2>
+<!-- <form action="/quiz/create" id="myform" method="POST"> -->
+    
+<br>
+<br>
+<table id="myTable" class=" table order-list" style="border: 1px solid #ddd;">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>title</td>
+            <td>correct`</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Question
+            </td>
+            <td class="col-sm-6">
+                <%= question%>
+            </td>
+            <td class="col-sm-2">
+            </td>
+        </tr>
 
-<table>
-  <tr>
-    <td><input type="radio" name="question" id="question1" /></td>
-    <td>10</td>
-  </tr>
-  <tr>
-    <td><input type="radio" name="question" id="question2" /></td>
-    <td>10</td>
-  </tr>
-  <tr>
-    <td><input type="radio" name="question" id="question3" /></td>
-    <td>10</td>
-  </tr>
+    </tbody>
+    <tbody>
+        <% for(let k =0; k <answer.length; k++) {%>
+        <tr>
+                <td>
+                    Answer
+                </td>
+                <td class="col-sm-6">
+                    <%= answer[k].answer_text%>
+                </td>
+                <td class="col-sm-2">
+                    <input type="checkbox" for="correct" class="form-control correct" value="<%= answer[k].isCorrect%>" id="correct" name="correct"/>
+                </td>
+        </tr>
+        <% } %>
+
+    </tbody>
 </table>
+<button id="verify" class="btn btn-primary btn-block">
+    verify question
+</button>
+<!-- </form> -->
+<script>
+
+$(document).ready(function () {
+    
+    $("#verify").click(function(e)
+    { 
+        var answer = $('.correct');
+        var m = 0;
+        var correct = true
+        var count = 0;
+        for (m ; m< answer.length; m++){
+            if (answer[m].checked ){
+                if (answer[m].value==false){
+                    correct = false;
+                    break;
+                }else{
+                    count = count+1
+                }
+            }
+        }
+        if (count == 0){
+            correct = false
+        }
+        var myForm = {result:correct}
+        console.log(myForm);
+         $.ajax(
+        {
+            url : "/quiz/verify",
+            type: "POST",
+            data : myForm,
+            success:function(response){
+                window.location.reload();
+            }
+        });
+        e.preventDefault(); //STOP default action
+
+    });
+
+
+
+});
+
+</script>

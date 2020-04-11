@@ -14,7 +14,7 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
 
 router.get('/profile', ensureAuthenticated, (req, res) =>
-  res.render('answer', {
+  res.render('profile', {
     user: req.user
   })
 );
@@ -86,7 +86,7 @@ router.post('/register', (req, res) => {
 // Login
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: '/quiz/profile',
+    successRedirect: '/users/profile',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);

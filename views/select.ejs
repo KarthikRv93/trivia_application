@@ -1,0 +1,46 @@
+<h2>Select the category</h2>
+<form action="/quiz/select-question" id="myform" method="POST">
+    
+    <br>
+     <select class="form-control" id="show-existing" name="categories" class = "select-css " multiple>
+        <% for(let k =0; k <categories.length; k++) {%>
+            <option value="<%=categories[k]%>"><%=categories[k]%></option>
+        <% } %>
+    </select>
+    <br>
+    <br>
+    <button type="submit" id="add-question" class="btn btn-primary btn-block">
+        create question
+    </button>
+</form>
+<script>
+
+$(document).ready(function () {
+    
+
+    // $("#add-question").click(function(e)
+    // { 
+    //     e.preventDefault(); //STOP default action
+    //     var selectedValues = $('#show-existing').val();
+
+    //     var myForm = {categories:selectedValues}
+    //      $.ajax(
+    //     {
+    //         url : "/quiz/select-question",
+    //         type: "POST",
+    //         data : myForm,
+    //         success:function(response){
+    //             let questionid = response.question;
+    //             console.log(questionid)
+    //             console.log('/quiz/answer?questionid='+questionid+'&categories='+selectedValues.toString())
+    //             window.location.href = '/quiz/answer?questionid='+questionid+'&categories='+selectedValues.toString();
+    //         }
+    //     });
+        
+
+    // });
+
+
+});
+
+</script>
