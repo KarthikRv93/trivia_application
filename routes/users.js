@@ -31,7 +31,12 @@ router.get("/profile", ensureAuthenticated, (req, res) => {
     }
   }
 
-  res.render("profile", { totalNumberOfAnswers, correctAnswers, wrongAnswers });
+  res.render("profile", {
+    user,
+    totalNumberOfAnswers,
+    correctAnswers,
+    wrongAnswers,
+  });
 });
 
 router.get("/leadership", ensureAuthenticated, (req, res) => {
