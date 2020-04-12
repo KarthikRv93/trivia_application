@@ -19,5 +19,5 @@ const config = {
   },
 };
 
-const env = process.env.ENV ? process.env.ENV : "DEV";
+const env = process.env.ENV ? process.env.ENV : "PROD";
 module.exports = config[env];

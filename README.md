@@ -1,23 +1,29 @@
-# Node.js & Passport Login
+# Trivia application
 
-This is a user login and registration app using Node.js, Express, Passport, Mongoose, EJS and some other packages.
+Try this app at https://trivia-questionnaire.herokuapp.com/users/login
 
-### Version: 2.0.0
+## Prerequisites
 
-### Usage
+- node.js
+- npm package manager
+- git
+- Mongodb and Mongoose
+
+## Installation
+
+Clone this repository and install node modules
 
 ```sh
+$ Install Mongodb
+$ git clone https://github.com/ivanmarban/node-quiz.git
+$ cd trivia_application
 $ npm install
+$ Give appropriate connection link for Mongodb database in config/keys.js
 ```
+
+Start the app
 
 ```sh
-$ npm start
-# Or run with Nodemon
-$ npm run dev
-
-# Visit http://localhost:5000
+$ node app.js
+$ visit http://localhost:5000 to view the application
 ```
-
-### MongoDB
-
-Open "config/keys.js" and add your MongoDB URI, local or Atlas
