@@ -17,6 +17,7 @@ router.get("/create-question", ensureAuthenticated, (req, res) => {
       for (k; k < data.length; k++) {
         result.push(data[k].category);
       }
+      console.log(data);
       res.render("create", {
         user: req.user,
         categories: result,

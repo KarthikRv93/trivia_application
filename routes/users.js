@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const { ensureAuthenticated, forwardAuthenticated } = require("../config/auth");
+const hel = require("../helper/helper");
 
 // Load User model
 const User = require("../models/User");
@@ -29,6 +30,12 @@ router.get("/profile", ensureAuthenticated, (req, res) => {
       wrongAnswers++;
     }
   }
+  hel.averageOfAllUsers().then((e) => console.log(e));
+  hel.bottomTenScores().then((e) => console.log(e));
+  res.render("profile", { totalNumberOfAnswers, correctAnswers, wrongAnswers });
+});
+
+router.get("/leadership", ensureAuthenticated, (req, res) => {
   res.render("profile", { totalNumberOfAnswers, correctAnswers, wrongAnswers });
 });
 
