@@ -17,6 +17,10 @@ const QuizSchema = new mongoose.Schema({
       isCorrect: { type: Boolean },
     },
   ],
+  votes: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const quizModel = mongoose.model("quizModel", QuizSchema);

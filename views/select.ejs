@@ -2,7 +2,7 @@
 <form action="/quiz/select-question" id="myform" method="POST">
     
     <br>
-     <select class="form-control" id="show-existing" name="categories" class = "select-css " multiple>
+     <select class="form-control" id="show-existing" name="categories" class = "select-css " multiple required>
         <% for(let k =0; k <categories.length; k++) {%>
             <option value="<%=categories[k]%>"><%=categories[k]%></option>
         <% } %>

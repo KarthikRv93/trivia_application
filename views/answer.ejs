@@ -1,53 +1,110 @@
-<h2>Category</h2>
-    
-<br>
-<br>
-<table id="myTable" class=" table order-list" style="border: 1px solid #ddd;">
-    <thead>
-        <tr>
-            <td>Name</td>
-            <td>title</td>
-            <td>correct`</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                Question
-            </td>
-            <td class="col-sm-6">
-                <%= question%>
-            </td>
-            <td class="col-sm-2">
-            </td>
-        </tr>
 
-    </tbody>
-    <tbody>
-        <% for(let k =0; k <answer.length; k++) {%>
-        <tr>
+<head>
+    <style>
+        .votes-container {
+            display: flex; 
+            justify-content: center;
+            align-items: center;      
+        }
+        .vote {
+            margin: 1em;
+        }
+    </style>
+
+</head>
+
+<div class="container">
+    <h2>Category</h2>
+    <table id="myTable" class="table order-list" style="border: 1px solid #ddd;">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>title</td>
+                <td>Correct</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
                 <td>
-                    Answer
+                    Question
                 </td>
                 <td class="col-sm-6">
-                    <%= answer[k].answer_text%>
+                    <%= question%>
                 </td>
                 <td class="col-sm-2">
-                    <input type="checkbox" for="correct" class="form-control correct" value="<%= answer[k].answer_text%>" id="correct" name="correct"/>
-                </td><
-                <input type="hidden" id="qid" value = "<%=questionid%>"/>
-        </tr>
-        <% } %>
+                </td>
+            </tr>
+    
+        </tbody>
+        <tbody>
+            <% for(let k =0; k <answer.length; k++) {%>
+            <tr>
+                    <td>
+                        Answer
+                    </td>
+                    <td class="col-sm-6">
+                        <%= answer[k].answer_text%>
+                    </td>
+                    <td class="col-sm-2">
+                        <input type="checkbox" for="correct" class="form-control correct" value="<%= answer[k].answer_text%>" id="correct" name="correct"/>
+                    </td><
+                    <input type="hidden" id="qid" value = "<%=questionid%>"/>
+            </tr>
+            <% } %>
+    
+        </tbody>
+    </table>
+    <button id="verify" class="btn btn-primary btn-block">
+        Verify Answer
+    </button>
+    <div class="votes-container">
+        <a class="icon-stack vote upvote" href="#">
+            <i class="icon-check-empty icon-stack-base"></i>
+            <i class="fa fa-3x fa-angle-up"></i>
+          </a>
+          <span class="votes-count"><%= votes%> votes</span>
+          <a class="icon-stack vote downvote" href="#">
+            <i class="icon-check-empty icon-stack-base"></i>
+            <i class="fa fa-3x fa-angle-down"></i>
+          </a>
+    </div>
 
-    </tbody>
-</table>
-<button id="verify" class="btn btn-primary btn-block">
-    verify question
-</button>
+</div>
 <!-- </form> -->
 <script>
 
 $(document).ready(function () {
+
+    $(".upvote").click(function(e) {
+        let id = $('#qid').val(); 
+        $.ajax({
+            url: "upvote",
+            type: "POST",
+            data: {
+                questionid: id,
+            },
+            success: response => {
+                if(response.success) {
+                    $('.votes-count').html( `${response.votes} votes`);
+                }
+            }
+        })
+    })
+    $(".downvote").click(function(e) {
+        let id = $('#qid').val(); 
+        $.ajax({
+            url: "downvote",
+            type: "POST",
+            data: {
+                questionid: id,
+            },
+            success: response => {
+                if(response.success) {
+                    $('.votes-count').html( `${response.votes} votes`);
+                }
+            }
+        })
+    })
     
     $("#verify").click(function(e)
     { 
@@ -74,6 +131,7 @@ $(document).ready(function () {
             }
         });
         e.preventDefault(); //STOP default action
+
 
     });
 
