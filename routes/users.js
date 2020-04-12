@@ -30,13 +30,22 @@ router.get("/profile", ensureAuthenticated, (req, res) => {
       wrongAnswers++;
     }
   }
-  hel.averageOfAllUsers().then((e) => console.log(e));
-  hel.bottomTenScores().then((e) => console.log(e));
+
   res.render("profile", { totalNumberOfAnswers, correctAnswers, wrongAnswers });
 });
 
 router.get("/leadership", ensureAuthenticated, (req, res) => {
-  res.render("profile", { totalNumberOfAnswers, correctAnswers, wrongAnswers });
+  Promise.all([
+    hel.averageOfAllUsers(),
+    hel.bottomTenScores(),
+    hel.topTenScores(),
+  ]).then(function (e) {
+    const avg = e[0];
+    const bottom = e[1];
+    const top = e[2];
+    console.log([avg, top, bottom]);
+    res.render("leadership", { avg, top, bottom });
+  });
 });
 
 // Register

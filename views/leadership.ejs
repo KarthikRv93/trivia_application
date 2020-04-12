@@ -1,17 +1,50 @@
 <h2>Leadership</h2>
 
-<table>
-  <tr>
-    <td>selected answer</td>
-    <td><%= selected.toString()%>/td></td>
-  </tr>
+<select class="form-control" id="show-existing" class="select-css">
+  <option value="topid">top 10 users</option>
+  <option value="bottomid">bottom 10 users</option>
+  <option value="avgid">Average of all users</option>
+</select>
+<br />
+<br />
+<br />
 
-  <tr>
-    <td>Correct Answers</td>
-    <td><%= list.toString()%></td>
-  </tr>
-  <tr>
-    <td>result</td>
-    <td><%= quizResult%></td>
-  </tr>
+<table class="Leadership" id="topid">
+    <tr>
+        <th>Name</th>
+        <th>Points</th>
+    </tr>
+    <% for(let k =0; k <top.length; k++) {%>
+        <tr>
+            <td><%= top[k].name%></td>
+            <td><%= top[k].points%></td>
+        </tr>
+    <% } %>
 </table>
+
+<table class="Leadership" id="bottomid" style="display: None;">
+        <tr>
+            <th>Name</th>
+            <th>Points</th>
+        </tr>
+  <% for(let k =0; k <top.length; k++) {%>
+        <tr>
+            <td><%= bottom[k].name%></td>
+            <td><%= bottom[k].points%></td>
+        </tr>
+    <% } %>
+</table>
+
+<div class="Leadership" id="avgid" style="display: None;">
+  <label>Average of all users</label>
+  <label> <%=avg%> </label>
+</div>
+<script>
+  $(document).ready(function () {
+    $("#show-existing").change(function () {
+      $(".Leadership").hide();
+      var id = $(this).val();
+      $("#" + id).show();
+    });
+  });
+</script>
