@@ -19,5 +19,5 @@ const config = {
   },
 };
 
-const env ="PROD";
+const env = "DEV";
 module.exports = config[env];
